@@ -1,0 +1,28 @@
+body {
+  height: 100vh;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #ff7e29, #ff0080);
+}
+
+.card {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.card:hover {
+  transform: scale(1.1);
+}
+
+.large-card {
+  height: 90px;
+  width: 90px;
+  font-size: 2rem;
+}
+
+.row {
+  justify-content: center;
+}
