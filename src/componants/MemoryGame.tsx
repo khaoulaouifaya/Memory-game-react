@@ -11,8 +11,20 @@ function MemoryGame() {
     "🍒", "🌽", "🍉", "🌼", "🍩", "⭐", "🏠", "🍎", "😎",
   ];
 
+  const [selectedCardsIndex,setSelectedCardsIndex] = useState<Number[]>([]);
+  const [selectedCardsContent,setSelectedCardsContent] = useState<String[]>([]);
+  const [result,setResult]=useState(0);
+
+
   const clickCard = (index: number, cardContent: String) => {
     setCountClick(countClick + 1);
+    setSelectedCardsIndex(prevState => [...prevState, index]);
+    setSelectedCardsContent(prevState => [...prevState, cardContent]);
+    selectedCardsContent.map(card => {
+      if(cardContent === card){
+          setResult(result+1);
+      }
+    });
   };
 
   const displayListCards = (cards: String[]) => {
@@ -21,8 +33,8 @@ function MemoryGame() {
         <div
           className="card large-card shadow-sm d-flex align-items-center justify-content-center"
           onClick={() => clickCard(index, card)}
-        >
-          <span>{card}</span>
+          style={selectedCardsIndex.includes(index) ? {background: "white"} : {background: "black"}}>
+          {selectedCardsIndex.includes(index) && <span>{card}</span>}
         </div>
       </div>
     ));
@@ -51,9 +63,8 @@ function MemoryGame() {
         <button className="btn btn-dark mb-3" onClick={handleStart}>
           Start
         </button>
-        <span> {countClick} moves | time: {time} sec</span>
+        <span> {countClick} moves | time: {time} sec</span> | Resultat : {result}
       </div>
-
       <div className="container">
         <div className="row row-cols-6 g-2">{displayListCards(cardsList)}</div>
       </div>
