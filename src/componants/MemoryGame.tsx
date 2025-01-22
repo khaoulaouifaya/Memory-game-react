@@ -18,13 +18,22 @@ function MemoryGame() {
 
   const clickCard = (index: number, cardContent: String) => {
     setCountClick(countClick + 1);
-    setSelectedCardsIndex(prevState => [...prevState, index]);
-    setSelectedCardsContent(prevState => [...prevState, cardContent]);
-    selectedCardsContent.map(card => {
-      if(cardContent === card){
-          setResult(result+1);
-      }
-    });
+    const count = selectedCardsContent.filter(item => item===cardContent).length;
+    if(count <= 1 ){
+      setSelectedCardsIndex(prevState => [...prevState, index]);
+      setSelectedCardsContent(prevState => [...prevState, cardContent]);
+      selectedCardsContent.map(card => {
+        if(cardContent === card){
+            setResult(result+1);
+        }else{
+          let uniques = [...new Set(selectedCardsIndex)];
+          setTimeout(() => {
+              setSelectedCardsIndex([]);
+              setSelectedCardsContent([]);
+        }, 1000); 
+        }
+      });
+    }
   };
 
   const displayListCards = (cards: String[]) => {
