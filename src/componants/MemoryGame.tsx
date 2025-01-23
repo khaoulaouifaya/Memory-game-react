@@ -48,7 +48,7 @@ function MemoryGame() {
               index === newSelectedCards.length - 1
             );
             setSelectedCards(matchingCards);
-          }, 1000);
+          }, 500);
         }
       });
     }
