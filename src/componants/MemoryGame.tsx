@@ -5,8 +5,7 @@ import  Card  from './models/Card';
 function MemoryGame() {
   const [countClick, setCountClick] = useState(0);
   const [time, setTime] = useState(0);
-  const [isRunning, setIsRunning] = useState(false); // Indicateur si le jeu est en cours
-
+  const [isRunning, setIsRunning] = useState(false);
   const cardsList: Card[] = [
   new Card(1, "🌽"),
   new Card(2, "🍒"),
@@ -33,16 +32,23 @@ function MemoryGame() {
 
   const clickCard = (cardContent : Card) => {
     setCountClick(countClick + 1);
-    const count = selectedCards.filter(item => item.content===cardContent.content).length;
-    if(count <= 1 ){
-      setSelectedCards(prevState => [...prevState, cardContent]);
+    const count = selectedCards.filter(item => item.content === cardContent.content).length;
+    
+    if(count <= 1) {
+      const newSelectedCards = [...selectedCards, cardContent];
+      setSelectedCards(newSelectedCards);
+      
       selectedCards.map(card => {
-        if(cardContent.content === card.content){
-          setResult(result+1);
-        }else{
+        if(cardContent.content === card.content) {
+          setResult(result + 1);
+        } else {
           setTimeout(() => {
-            setSelectedCards([]);
-      }, 1000);
+            const matchingCards = newSelectedCards.filter((selectedCard, index) => 
+              newSelectedCards.filter(c => c.content === selectedCard.content).length >= 2 || 
+              index === newSelectedCards.length - 1
+            );
+            setSelectedCards(matchingCards);
+          }, 1000);
         }
       });
     }
